@@ -21,7 +21,9 @@ namespace SupportWheelOfFateAPI.Services
 
             foreach (var workDay in workDays)
             {
-                var availableEmployees = employeesQueryable.GetEmployeesWhoDidNotSupportOnDay(supportDays.Any() ? supportDays.Last() : null);
+                var availableEmployees = employeesQueryable
+                    .GetEmployeesWhoSupportedLess(supportDays)
+                    .GetEmployeesWhoDidNotSupportOnDay(supportDays.Any() ? supportDays.Last() : null);
 
                 Employee shiftOne = availableEmployees.GetRandomEmployee(random);
                 Employee shiftTwo = availableEmployees.GetRandomEmployee(exceptEmployee: shiftOne, random: random);
