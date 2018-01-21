@@ -17,60 +17,55 @@ namespace SupportWheelOfFateAPI.Services
             Random random = new Random();
             List<SupportDay> supportDays = new List<SupportDay>();
 
-            var firstEmployee = employees.GetRandomEmployee(random);
             var employeesQueryable = employees.AsQueryable();
 
-            SupportDay supportDay = new SupportDay()
+            foreach (var workDay in workDays)
             {
-                Date = workDays[0],
-                ShiftOne = firstEmployee,
-                ShiftTwo = employeesQueryable.GetRandomEmployee(exceptEmployee: firstEmployee, random: random)
-            };
-
-            supportDays.Add(supportDay);
-
-            for (int i = 1; i < workDays.Count; i++)
-            {
-                var availableEmployees = employeesQueryable.GetEmployeesWhoDidNotSupportOnDay(supportDays.Last());
+                var availableEmployees = employeesQueryable.GetEmployeesWhoDidNotSupportOnDay(supportDays.Any() ? supportDays.Last() : null);
 
                 Employee shiftOne = availableEmployees.GetRandomEmployee(random);
                 Employee shiftTwo = availableEmployees.GetRandomEmployee(exceptEmployee: shiftOne, random: random);
 
                 supportDays.Add(new SupportDay()
                 {
-                    Date = workDays[i],
+                    Date = workDay,
                     ShiftOne = shiftOne,
                     ShiftTwo = shiftTwo
                 });
             }
 
+            if (!ValidateSupportDaysList(supportDays))
+            {
+                throw new Exception("Failed to generate correct plan");
+            }
+
             return new SupportList(supportDays);
         }
 
-        //public bool ValidateSupportDaysList(List<SupportDay> supportDays)
-        //{
-        //    var previousSupportDay = supportDays.First();
+        private bool ValidateSupportDaysList(List<SupportDay> supportDays)
+        {
+            var previousSupportDay = supportDays.First();
 
-        //    for (int i = 1; i < supportDays.Count; i++)
-        //    {
-        //        var supportDay = supportDays[i];
-        //        if (supportDay.ShiftOne.Id == supportDay.ShiftTwo.Id)
-        //        {
-        //            return false;
-        //        }
+            for (int i = 1; i < supportDays.Count; i++)
+            {
+                var supportDay = supportDays[i];
+                if (supportDay.ShiftOne.Id == supportDay.ShiftTwo.Id)
+                {
+                    return false;
+                }
 
-        //        if (previousSupportDay.ShiftOne.Id == supportDay.ShiftOne.Id
-        //            || previousSupportDay.ShiftOne.Id == supportDay.ShiftTwo.Id
-        //            || previousSupportDay.ShiftTwo.Id == supportDay.ShiftOne.Id
-        //            || previousSupportDay.ShiftTwo.Id == supportDay.ShiftTwo.Id)
-        //        {
-        //            return false;
-        //        }
+                if (previousSupportDay.ShiftOne.Id == supportDay.ShiftOne.Id
+                    || previousSupportDay.ShiftOne.Id == supportDay.ShiftTwo.Id
+                    || previousSupportDay.ShiftTwo.Id == supportDay.ShiftOne.Id
+                    || previousSupportDay.ShiftTwo.Id == supportDay.ShiftTwo.Id)
+                {
+                    return false;
+                }
 
-        //        previousSupportDay = supportDay;
-        //    }
+                previousSupportDay = supportDay;
+            }
 
-        //    return true;
-        //}
+            return true;
+        }
     }
 }

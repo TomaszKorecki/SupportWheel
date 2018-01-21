@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportWheelOfFateAPI", "SupportWheelOfFateAPI\SupportWheelOfFateAPI.csproj", "{8BE42821-28B5-4604-952B-4038B9548152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupportWheelOfFateAPI", "SupportWheelOfFateAPI\SupportWheelOfFateAPI.csproj", "{8BE42821-28B5-4604-952B-4038B9548152}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportWheelOfFateInfrastructure", "SupportWheelOfFateInfrastucture\SupportWheelOfFateInfrastructure.csproj", "{346BA441-B84C-4402-B3BE-142BF8D391ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupportWheelOfFateInfrastructure", "SupportWheelOfFateInfrastucture\SupportWheelOfFateInfrastructure.csproj", "{346BA441-B84C-4402-B3BE-142BF8D391ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
