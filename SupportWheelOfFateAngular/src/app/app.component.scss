@@ -1,0 +1,19 @@
+.page {
+    text-align: center;
+}
+
+.reload-button {
+    border: 1px solid black;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.05, 1.05);
+        transition: 0.1s;
+    }
+    &:active {
+        transform: scale(1, 1);
+        transition: 0.1s;
+    }
+}

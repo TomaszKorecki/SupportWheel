@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+html {
+    background-image: url("/assets/img/halftone-yellow.png");
+    background-attachment: fixed;
+}
+
+@font-face {
+    font-family: 'Proxima nova';
+    src: url('/assets/font/Proxima nova.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: Proxima nova;
+}

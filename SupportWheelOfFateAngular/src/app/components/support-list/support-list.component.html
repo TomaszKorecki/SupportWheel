@@ -1,0 +1,13 @@
+<table class="support-table">
+    <tr class="row" *ngFor="let supportDay of supportDays">
+        <td class="date">
+            {{supportDay.date | date:'fullDate'}}
+        </td>
+        <td class="employee">
+            {{supportDay.shiftOne.name}}
+        </td>
+        <td class="employee">
+            {{supportDay.shiftTwo.name}}
+        </td>
+    </tr>
+</table>
