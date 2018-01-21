@@ -49,8 +49,8 @@ namespace SupportWheelOfFateAPI.Controllers
             return supportPlan.SupportDays;
         }
 
-        [HttpPost("regenerate")]
-        public List<SupportDay> RegenerateList()
+        [HttpGet("new")]
+        public List<SupportDay> ReloadList()
         {
             var supportPlan = SupportListGenerator.GeneratePlan(
                 EmployeeRepository.GetEmployees(),
