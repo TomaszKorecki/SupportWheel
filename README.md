@@ -5,3 +5,4 @@ Program is able to generate and show support shifts for next several days for th
 Moreover, once shift plan is generated, it's kept in the memory. For this purpose Memory Cache was used. It would allow to setup whole application on the company server and show the shift plan to everyone interested. 
 
 The whole shift plan could be re calculated using button RELOAD on the main page of the application. 
+
