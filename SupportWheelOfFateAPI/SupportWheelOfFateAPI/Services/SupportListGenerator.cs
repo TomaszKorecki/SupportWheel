@@ -11,7 +11,7 @@ namespace SupportWheelOfFateAPI.Services
 {
     public class SupportListGenerator : ISupportListGenerator
     {
-        public List<SupportDay> GeneratePlan(List<Employee> employees, int daysPeriod)
+        public SupportList GeneratePlan(List<Employee> employees, int daysPeriod)
         {
             var workDays = DateTime.Now.GetNextWorkingDays(daysPeriod).ToList();
             Random random = new Random();
@@ -44,33 +44,33 @@ namespace SupportWheelOfFateAPI.Services
                 });
             }
 
-            return supportDays;
+            return new SupportList(supportDays);
         }
 
-        public bool ValidateSupportDaysList(List<SupportDay> supportDays)
-        {
-            var previousSupportDay = supportDays.First();
+        //public bool ValidateSupportDaysList(List<SupportDay> supportDays)
+        //{
+        //    var previousSupportDay = supportDays.First();
 
-            for (int i = 1; i < supportDays.Count; i++)
-            {
-                var supportDay = supportDays[i];
-                if (supportDay.ShiftOne.Id == supportDay.ShiftTwo.Id)
-                {
-                    return false;
-                }
+        //    for (int i = 1; i < supportDays.Count; i++)
+        //    {
+        //        var supportDay = supportDays[i];
+        //        if (supportDay.ShiftOne.Id == supportDay.ShiftTwo.Id)
+        //        {
+        //            return false;
+        //        }
 
-                if (previousSupportDay.ShiftOne.Id == supportDay.ShiftOne.Id
-                    || previousSupportDay.ShiftOne.Id == supportDay.ShiftTwo.Id
-                    || previousSupportDay.ShiftTwo.Id == supportDay.ShiftOne.Id
-                    || previousSupportDay.ShiftTwo.Id == supportDay.ShiftTwo.Id)
-                {
-                    return false;
-                }
+        //        if (previousSupportDay.ShiftOne.Id == supportDay.ShiftOne.Id
+        //            || previousSupportDay.ShiftOne.Id == supportDay.ShiftTwo.Id
+        //            || previousSupportDay.ShiftTwo.Id == supportDay.ShiftOne.Id
+        //            || previousSupportDay.ShiftTwo.Id == supportDay.ShiftTwo.Id)
+        //        {
+        //            return false;
+        //        }
 
-                previousSupportDay = supportDay;
-            }
+        //        previousSupportDay = supportDay;
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
     }
 }

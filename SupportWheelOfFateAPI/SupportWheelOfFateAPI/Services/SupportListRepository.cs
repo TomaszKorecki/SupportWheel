@@ -19,12 +19,12 @@ namespace SupportWheelOfFateAPI.Services
             MemoryCache = memoryMemoryCache;
         }
 
-        public List<SupportDay> GetSupportList()
+        public SupportList GetSupportList()
         {
-            return MemoryCache.Get<List<SupportDay>>(SupportListEntryKey);
+            return MemoryCache.Get<SupportList>(SupportListEntryKey);
         }
 
-        public void SaveSupportList(List<SupportDay> supportDays)
+        public void SaveSupportList(SupportList supportDays)
         {
             MemoryCache.Set(SupportListEntryKey, supportDays);
         }

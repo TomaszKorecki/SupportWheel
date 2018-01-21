@@ -8,15 +8,17 @@ using Microsoft.Extensions.Options;
 using SupportWheelOfFateAPI.Models.Configuration;
 using SupportWheelOfFateAPI.Services;
 using SupportWheelOfFateInfrastructure.Interfaces;
+using SupportWheelOfFateInfrastructure.Models;
 
 namespace SupportWheelOfFateAPI.Controllers
-{   
+{
     [Produces("application/json")]
     [Route("api/SupportList")]
     public class SupportListController : Controller
     {
-        ISupportListGenerator SupportListGenerator { get; }
-        IEmployeeRepository EmployeeRepository{ get; }
+        private ISupportListGenerator SupportListGenerator { get; }
+        private ISupportListRepository SupportListRepository { get; }
+        private IEmployeeRepository EmployeeRepository { get; }
         private SupportWheelConfiguration SupportWheelConfiguration { get; }
 
         public SupportListController(
@@ -26,24 +28,37 @@ namespace SupportWheelOfFateAPI.Controllers
             IOptions<SupportWheelConfiguration> supportWheelOptions)
         {
             SupportListGenerator = supportListGenerator;
+            SupportListRepository = supportListRepository;
             EmployeeRepository = employeeRepository;
             SupportWheelConfiguration = supportWheelOptions.Value;
         }
 
-
         [HttpGet]
-        public dynamic Get()
+        public List<SupportDay> Get()
         {
-            var supportPlan = SupportListGenerator.GeneratePlan(EmployeeRepository.GetEmployees(), SupportWheelConfiguration.SupportWindowPeriod);
-            var validate = SupportListGenerator.ValidateSupportDaysList(supportPlan);
+            var supportPlan = SupportListRepository.GetSupportList();
+            if (supportPlan == null)
+            {
+                supportPlan = SupportListGenerator.GeneratePlan(
+                    EmployeeRepository.GetEmployees(),
+                    SupportWheelConfiguration.SupportWindowPeriod);
 
-            return validate ? supportPlan : null;
+                SupportListRepository.SaveSupportList(supportPlan);
+            }
+
+            return supportPlan.SupportDays;
         }
 
         [HttpPost("regenerate")]
-        public dynamic RegenerateList()
+        public List<SupportDay> RegenerateList()
         {
-            return null;
+            var supportPlan = SupportListGenerator.GeneratePlan(
+                EmployeeRepository.GetEmployees(),
+                SupportWheelConfiguration.SupportWindowPeriod);
+
+            SupportListRepository.SaveSupportList(supportPlan);
+
+            return supportPlan.SupportDays;
         }
     }
 }

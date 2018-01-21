@@ -7,7 +7,7 @@ namespace SupportWheelOfFateInfrastructure.Interfaces
 {
     public interface ISupportListRepository
     {
-        List<SupportDay> GetSupportList();
-        void SaveSupportList(List<SupportDay> supportDays);
+        SupportList GetSupportList();
+        void SaveSupportList(SupportList supportDays);
     }
 }

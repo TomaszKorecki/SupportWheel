@@ -8,7 +8,7 @@ namespace SupportWheelOfFateInfrastructure.Interfaces
 {
     public interface ISupportListGenerator
     {
-        List<SupportDay> GeneratePlan(List<Employee> employees, int daysPeriod);
-        bool ValidateSupportDaysList(List<SupportDay> supportDays);
+        SupportList GeneratePlan(List<Employee> employees, int daysPeriod);
+        //bool ValidateSupportDaysList(List<SupportDay> supportDays);
     }
 }
